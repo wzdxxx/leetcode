@@ -142,10 +142,24 @@
 //}
 
 //10
-//暂时跳过，没有思路
-//bool isMatch(char* s, char* p) {
-//	
-//}
+//暴力算法，这道题感觉挺难，参考的别人的
+
+bool isMatch(char * s, char * p){
+	//如果p为空，s为空匹配，s非空不匹配
+	if (!*p) return !*s;
+	//s非空，p == s || p == '.'时第一个字符匹配
+	bool first_match = *s && (*s == *p || *p == '.');
+	
+	if (*(p+1) == '*') {
+		//*匹配0个字符,s匹配剩下的||*匹配1个字符,继续用p匹配剩下的s
+		return isMatch(s, p+2) || (first_match && isMatch(++s, p));
+	} 
+	else {
+		//(p+1) != ''，则递归判断剩下的是否匹配
+		return first_match && isMatch(++s, ++p);
+	}
+}
+
 
 //11
 //int max(int x,int y){
